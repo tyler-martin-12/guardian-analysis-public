@@ -1,12 +1,5 @@
 {
   "years": [
-    2015,
-    2016,
-    2017,
-    2018,
-    2019,
-    2020,
-    2021,
     2022,
     2023,
     2024,
@@ -39,61 +32,12 @@
     "reform": "#12b6cf",
     "independent": "#7f7f7f"
   },
+  "filters": {
+    "immigration_context": "yes",
+    "min_year": 2022,
+    "confidence": "high"
+  },
   "rows": [
-    {
-      "year": 2015,
-      "party": "conservative",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2015,
-      "party": "labour",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2015,
-      "party": "labourco-operative",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2015,
-      "party": "labourco-operative",
-      "echo_type": "quoted_or_critical",
-      "count": 1
-    },
-    {
-      "year": 2016,
-      "party": "conservative",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2016,
-      "party": "labour",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2020,
-      "party": "conservative",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2021,
-      "party": "conservative",
-      "echo_type": "own_voice",
-      "count": 1
-    },
-    {
-      "year": 2021,
-      "party": "labourco-operative",
-      "echo_type": "quoted_or_critical",
-      "count": 1
-    },
     {
       "year": 2022,
       "party": "conservative",
@@ -116,19 +60,13 @@
       "year": 2023,
       "party": "conservative",
       "echo_type": "own_voice",
-      "count": 231
+      "count": 230
     },
     {
       "year": 2023,
       "party": "labour",
       "echo_type": "own_voice",
-      "count": 3
-    },
-    {
-      "year": 2023,
-      "party": "labourco-operative",
-      "echo_type": "own_voice",
-      "count": 1
+      "count": 2
     },
     {
       "year": 2023,
@@ -140,7 +78,7 @@
       "year": 2023,
       "party": "conservative",
       "echo_type": "quoted_or_critical",
-      "count": 15
+      "count": 8
     },
     {
       "year": 2023,
@@ -164,7 +102,7 @@
       "year": 2023,
       "party": "liberal-democrat",
       "echo_type": "quoted_or_critical",
-      "count": 5
+      "count": 3
     },
     {
       "year": 2023,
@@ -182,7 +120,7 @@
       "year": 2024,
       "party": "labour",
       "echo_type": "own_voice",
-      "count": 7
+      "count": 6
     },
     {
       "year": 2024,
@@ -194,7 +132,7 @@
       "year": 2024,
       "party": "conservative",
       "echo_type": "quoted_or_critical",
-      "count": 9
+      "count": 6
     },
     {
       "year": 2024,
@@ -242,7 +180,7 @@
       "year": 2025,
       "party": "conservative",
       "echo_type": "quoted_or_critical",
-      "count": 4
+      "count": 3
     },
     {
       "year": 2025,

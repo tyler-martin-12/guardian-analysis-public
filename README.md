@@ -1,6 +1,6 @@
 # Guardian immigration rhetoric probe
 
-This repository contains the code and final data artifacts for a methodological probe of UK parliamentary immigration rhetoric, focusing on cases where surface affective vocabulary diverges from substantive stance. It accompanies the blog post at `blog/index.html` and was motivated by the Guardian/UCL analysis of 100 years of immigration rhetoric in Hansard.
+This repository contains the code and final data artifacts for a methodological probe of UK parliamentary immigration rhetoric, focusing on cases where surface affective vocabulary diverges from substantive stance. It accompanies the blog post [Stance without affect](https://tyler-alexander-martin.com/blog/stance-without-affect) and was motivated by the Guardian/UCL analysis of 100 years of immigration rhetoric in Hansard.
 
 ## Reproduce
 

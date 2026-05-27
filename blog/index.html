@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stance without affect: where lexicons fail in UK parliamentary immigration speech</title>
+  <meta name="description" content="A methodological probe of stance, lexicons, LLMs, and rhetorical echo in UK parliamentary immigration speech." />
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    :root{--ink:#171717;--muted:#626262;--rule:#dedbd3;--paper:#fffdf8;--soft:#f6f1e8;--accent:#1f4e79;--quote:#faf7ef;}
+    *{box-sizing:border-box} body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.62} main{max-width:780px;margin:0 auto;padding:48px 22px 72px} header{margin-bottom:28px} h1{font-family:Georgia,serif;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1.03;letter-spacing:-.02em;margin:0 0 18px} h2{font-family:Georgia,serif;font-size:1.85rem;line-height:1.2;margin:48px 0 14px} h3{font-size:1.16rem;margin:34px 0 10px} p{font-size:1.05rem;margin:0 0 20px} a{color:var(--accent)} em{font-style:italic} figure{margin:34px 0} figure img{width:100%;height:auto;border-radius:10px;border:1px solid var(--rule);display:block} figcaption{font-size:.88rem;color:var(--muted);margin-top:8px}.speech{background:var(--quote);border-left:4px solid var(--accent);padding:18px 20px;margin:18px 0 8px;border-radius:0 8px 8px 0}.speech p{margin:0;font-family:Georgia,serif;font-size:1.08rem}.labels{font-size:.92rem;color:var(--muted);margin:0 0 22px}.chart-wrap{margin:28px calc(50% - 50vw);padding:22px min(6vw,48px);background:#fff;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}#stop-boats-chart{width:100%;height:720px}.table-wrap{overflow-x:auto;margin:18px 0 24px}table{border-collapse:collapse;width:100%;font-size:.96rem;background:#fff}th,td{border-bottom:1px solid var(--rule);padding:9px 10px;text-align:left}th{font-weight:700;background:var(--soft)}.post-footer{border-top:1px solid var(--rule);margin-top:54px;padding-top:20px;color:var(--muted);font-size:.95rem}.share{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.share a,.share button{border:1px solid var(--rule);background:#fff;color:var(--ink);padding:8px 12px;border-radius:999px;text-decoration:none;font:inherit;cursor:pointer}.note{color:var(--muted);font-size:.95rem}@media(max-width:700px){main{padding-top:28px}.chart-wrap{margin-left:-22px;margin-right:-22px;padding:16px 8px}#stop-boats-chart{height:640px}}
+  </style>
+</head>
+<body>
+<main>
+<header>
+<h1>Stance without affect: where lexicons fail in UK parliamentary immigration speech</h1>
+</header>
+
+<figure>
+  <picture><source srcset="images/dictionary-negation.webp" type="image/webp"><img src="images/dictionary-negation.png" alt="Cartoon: MP says 'We must NOT treat asylum seekers as criminals.' Dictionary character circles only 'asylum seekers' and 'criminals' and thinks: 'Restrictive!'" loading="eager"></picture>
+</figure>
+
+<p>In February the Guardian published a striking visual analysis of 100 years of immigration rhetoric in the House of Commons, built in collaboration with researchers at UCL. The piece scrolls through a century of Hansard, tracking how MPs across parties have spoken about immigration. The headline finding is that Conservative and Reform UK MPs are now discussing immigration in the most negative terms since 1923. The visualisation is beautifully done, the methodology is more careful than most computational text analysis I've seen in journalism, and the team has been admirably transparent about how the model was built. It uses a custom machine learning classifier, trained on human-annotated examples with LLM-assisted labelling, designed to distinguish general emotional language from sentiment directed specifically at immigration.</p>
+
+<p>Reading the piece made me curious about where this kind of analysis remains hardest. Computational stance detection on parliamentary speech traditionally leans heavily on <em>affective vocabulary</em>, the assumption that emotional language tracks substantive position. Hostile words signal hostile stance; warm words signal warm stance. The Guardian/UCL team have moved well beyond a naive lexicon, but the assumption hasn't gone away entirely. I wanted to probe one specific gap: how often does affective vocabulary diverge from substantive stance in real Commons speech, and how well do simpler methods cope when it does?</p>
+
+<h2>What I did</h2>
+<p>I pulled Commons Hansard from 2015 to 2025 through TheyWorkForYou's bulk XML, filtered for immigration trigger terms, and built a corpus of about 22,700 speeches. From this I constructed a deliberately curated sample of 47 speeches across five sub-types where I expected surface vocabulary to diverge from substantive stance, plus a control set of straightforwardly restrictive speeches. The sub-types: direct negation of hostile vocabulary, quoted hostility being criticised, critique of named restrictive policies, refutation of hostile framing, and ministerial defences of restrictive policy dressed in humanitarian language. Candidates were generated by regex search over the corpus and manually reviewed for clean examples.</p>
+<p>This is not a random sample. It is a stress test, designed to probe failure modes. The results need to be read in that light.</p>
+<p>For labels, I worked through Claude Sonnet first, then reviewed each speech and adjudicated uncertain or borderline cases through Claude Opus. Where Sonnet, Opus, and my own reading converged, I treated that as the consensus label. Where they didn't, I read the full speech context and made the call. The lexicon scored the speeches independently, using a hand-built word list of affective terms for and against immigration, with a count-positive minus count-negative scoring rule.</p>
+<p>So the comparison isn't strictly "human vs. lexicon vs. LLM." It's "lexicon vs. a frontier-LLM-and-human consensus." That's a real and useful comparison, but it's narrower than the post might otherwise suggest. I'll come back to this.</p>
+
+<h2>Three speeches</h2>
+<h3>Tahir Ali, 9 January 2024</h3>
+<blockquote class="speech"><p>"The Government's approach to asylum seekers can at best be described as a farce. The asylum application backlog persists and is growing. Thousands of people have simply disappeared into the underground economy, with the Home Office admitting that it has lost track of nearly 17,000 people. The continued use of hotel accommodation is costing the British taxpayer untold millions, while the disgraced Rwanda plan limps ahead."</p></blockquote>
+<p class="labels"><strong>Consensus label:</strong> pro-refugee. <strong>Lexicon:</strong> mixed/unclear.</p>
+<p>A Labour MP attacking the Conservative government's asylum policy during the Rwanda Bill committee stage. The stance is unmistakeable to any human reader. This is pro-refugee, criticising restrictive policy for being cruel and incompetent. But notice the vocabulary. "Backlog," "underground economy," "lost track," "hotel accommodation," "British taxpayer," "Rwanda plan." Administrative, operational, managerial words. Nothing that registers as either positive or negative on an affect lexicon.</p>
+<p>The lexicon defaults to "mixed/unclear" because nothing trips its triggers.</p>
+<p>Most parliamentary speech looks like this. The grand humanitarian set-piece is the exception; the operational critique is the norm. If your method only detects stance when stance comes wrapped in emotional vocabulary, you'll be silent on most of what Parliament actually says about immigration.</p>
+
+<h3>Tulip Siddiq, 5 December 2018</h3>
+<blockquote class="speech"><p>"Immigration officers go around in the middle of the night capturing people and putting them in prison-like cells. In this country, we have legislation that limits how long terror suspects and criminal suspects can be detained. Terror suspects can be detained without charge for 14 days and criminal suspects can be detained without charge for 28 days, but we do not afford that same protection to refugees, asylum seekers and immigrants. That should put us to shame."</p></blockquote>
+<p class="labels"><strong>Consensus label:</strong> pro-refugee. <strong>Lexicon:</strong> restrictive/hostile.</p>
+<p>A Labour MP introducing a ten-minute rule bill to cap immigration detention at 28 days. The stance is unambiguously pro-refugee. She's arguing that asylum seekers deserve <em>more</em> legal protection than they currently have. But the vocabulary tells the opposite story. "Capturing." "Prison-like cells." "Terror suspects." "Criminal suspects." "Detained without charge."</p>
+<p>Six instances of restrictive vocabulary in a single argument for greater humanitarian protection. The lexicon reads the words and labels the speech restrictive.</p>
+<p>This is the inverse of the Tahir Ali problem. There, sparse vocabulary defaulted the lexicon to "mixed." Here, dense vocabulary actively misled it. Either way, the surface diverges from the substance, and a method that only sees the surface gets it wrong.</p>
+
+<h3>Ben Obese-Jecty, 10 February 2025</h3>
+<blockquote class="speech"><p>"With no credible deterrent since the election, we have seen numbers rocket and migrant hotels reopen... The only deterrent in the Bill appears to be five years in prison if migrants refuse to be rescued in the channel by French authorities... This is a terrible Bill that pays lip service to controlling illegal immigration by talking tough while crossing its fingers behind its back."</p></blockquote>
+<p class="labels"><strong>Consensus label:</strong> restrictive/hostile. <strong>Lexicon:</strong> pro-refugee.</p>
+<p>A Conservative MP attacking Labour's Border Security, Asylum and Immigration Bill from the right. The substance is restrictive. He wants harder deterrence, more deportations, and is angry that the current government has weakened the previous regime. But look at the surface pattern. The hostile vocabulary appears almost entirely in <em>negated</em> form: "no credible deterrent," "not be the solution," "lip service to controlling illegal immigration." The lexicon, with naive negation handling, reads negated-restrictive as pro-refugee and flips its label.</p>
+<p>This is the third failure mode. The first speech had too little vocabulary. The second had too much. This one has the right vocabulary but in the wrong syntactic context.</p>
+<p>Adding this speech to the mix matters for another reason: it shows the failure is methodological, not political. Lexicons don't fail in one direction. They fail wherever surface vocabulary diverges from substantive stance, and in parliamentary speech that happens in both directions roughly equally often.</p>
+
+<h2>The systematic pattern</h2>
+<p>Across the 47 speeches, the lexicon agrees with the consensus labels 83% of the time overall, broken down by sub-type as follows:</p>
+<div class="table-wrap"><table><thead><tr><th>Sub-type</th><th>Lexicon agreement</th></tr></thead><tbody><tr><td>Refutation of hostile framing</td><td>100%</td></tr><tr><td>Quoted hostility</td><td>88%</td></tr><tr><td>Direct negation</td><td>86%</td></tr><tr><td>Ministerial humanitarian register</td><td>86%</td></tr><tr><td>Critique of restrictive policy</td><td>75%</td></tr><tr><td>Restrictive controls</td><td>70%</td></tr><tr><td><strong>Overall</strong></td><td><strong>83%</strong></td></tr></tbody></table></div>
+<p>The lexicon's failures aren't random. They cluster in exactly the sub-types where surface and substance diverge. It struggles most on restrictive control speeches, where ministers defend tough policy in humanitarian register or where critics like Obese-Jecty use negation to attack from the right, and on critique-of-restrictive-policy speeches, where pro-refugee MPs use hostile vocabulary to describe what they oppose. The confusion matrix is symmetric: three pro-stance speeches misclassified as restrictive, three restrictive speeches misclassified as pro.</p>
+<p>A few caveats are worth being explicit about. The sample was constructed to find these failure modes, so 17% disagreement is an upper bound on a stress test, not an estimate of lexicon error on random parliamentary speech. Frontier LLM labels were the starting point for the consensus, so the comparison is partly tautological in the LLM's favour; the more honest claim is "the lexicon disagrees with what careful human-plus-frontier-LLM labelling concludes about specific kinds of speech," not "the LLM beats the human." And labelling parliamentary stance is genuinely hard. Several of my own initial reads of subtler speeches were wrong, including a James Brokenshire 2016 speech I first labelled as pro-refugee because of its humanitarian language. Re-reading, it was a minister arguing that child refugees should be processed in France rather than transferred to the UK, restrictive substance dressed in compassionate framing. The LLM flagged the underlying position; I had to be pushed back to the rubric to see it.</p>
+
+<h2>Echoes and amplification</h2>
+<figure>
+  <picture><source srcset="images/stop-the-boats-echo.webp" type="image/webp"><img src="images/stop-the-boats-echo.png" alt="Cartoon: Conservative MP says 'STOP THE BOATS' earnestly while Labour MP says the same phrase with air quotes and an eye roll. A dictionary character on the table holds a clipboard with two tally marks. Caption: 'The lexicon counts.'" loading="lazy"></picture>
+</figure>
+<p>The per-speech failures above are local. They affect individual labels. The same mechanism produces a more interesting failure when you look at how specific phrases move across the chamber over time.</p>
+<p>Consider "stop the boats." Rishi Sunak made it one of his five pledges in January 2023, and the slogan dominated Conservative immigration rhetoric for the next eighteen months. The phrase appears in 2015-2025 Hansard 426 times in immigration-related contexts. Conservative MPs account for 311 of those, almost all in their own voice as policy framing. But the phrase also appears 39 times in Labour speeches, 8 times in SNP speeches, and 7 in Liberal Democrat speeches. A lexicon counting mentions by party would conclude that opposition parties were also engaging with the slogan, perhaps even adopting it.</p>
+<p>They were not. Of Labour's 54 mentions across the period, 39 are classified by an LLM pass as quoted or critical use rather than own-voice. The SNP's 8 mentions are all quoted or critical, with zero own-voice uses. Across all opposition mentions of "stop the boats," about three quarters are speakers using the phrase to attack the policy or quote the people defending it.</p>
+<p>Yvette Cooper, speaking on the Rwanda Bill in December 2023:</p>
+<blockquote class="speech"><p>"We have the former Home Secretary, the right hon. and learned Member for Fareham (Suella Braverman), who signed the last agreement and brought forward the last piece of legislation, saying that the Bill is fatally flawed and will not stop the boats. Yesterday we had Back Benchers saying that the Bill should have been pulled because it is partial and incomplete."</p></blockquote>
+<p>Three uses of "stop the boats" in two sentences, all critical. A lexicon counting Labour uses of restrictive vocabulary would record three. A reader hears three rebuttals.</p>
+<p>The split is visible in the data:</p>
+<div class="chart-wrap"><div id="stop-boats-chart"></div><p class="note">Source: Commons Hansard via TheyWorkForYou/Public Whip XML, 2015-2025. Use type classified with Claude Sonnet.</p></div>
+<p>The contrast with "small boats" makes the pattern sharper. The descriptive phrase has been absorbed across parties as neutral operational vocabulary. By 2025, Labour MPs use it 78 times in their own voice; Conservative MPs use it 28. There is no echo signal because the phrase no longer carries partisan loading. A lexicon counting "small boats" by party in 2025 would correctly conclude that the term is now bipartisan vocabulary, because it actually is.</p>
+<p>This matters for aggregate analysis. When a political phrase enters circulation through one party and gets amplified through opposition criticism, naive metrics will show convergence on the original framing. The reality is closer to the opposite.</p>
+
+<h2>What this means for the Guardian/UCL analysis</h2>
+<p>The UCL team built a custom ML model with LLM-assisted annotation, not a lexicon. The failures shown here apply to lexicon baselines, not to their specific method. Their classifier is presumably trained on annotated examples that include some of these defensive and ministerial-humanitarian cases. How well it handles them is an empirical question that their published methodology doesn't fully resolve.</p>
+<p>What this probe does suggest is a broader point about computational stance analysis of political speech. Defensive rhetoric, ministerial humanitarian framing, and rhetorical echo through critique are not edge cases. They are structurally common in Commons debate, and they concentrate during politically heated periods, exactly the periods where the headline findings of these analyses tend to land. A model that handles these patterns well will tell a different story about how parliamentary rhetoric has evolved than a model that doesn't. The Guardian's headline finding that Conservative and Reform rhetoric is at its most negative since 1923 depends, in ways the methodology summary doesn't quite spell out, on the model getting these cases right.</p>
+<p>Worth interrogating. Not worth doubting on the basis of this probe alone.</p>
+
+<h2>What's next</h2>
+<p>A few directions I'd want to extend this in:</p>
+<p>Apply the comparison to a properly sampled random subset of immigration speeches, not just curated stress cases, to get an honest estimate of how often lexicons and LLMs disagree on real parliamentary input.</p>
+<p>Add a fine-tuned transformer baseline, a properly trained classifier on a published political-sentiment dataset, so the comparison isn't just "modern frontier model versus word list." That's the comparison that would actually evaluate whether the kind of model the UCL team built closes most of the gap.</p>
+<p>Run aggregate party-level analysis on a single year, comparing what the lexicon, a trained classifier, and an LLM each conclude about Labour versus Conservative stance, with confidence intervals. That would test whether the per-speech disagreements wash out at aggregate scale or whether they meaningfully bias party-level comparisons.</p>
+<p>Extend the echo analysis to other politically loaded phrases ("hostile environment," "invasion," "swamped"), with proper context filtering to separate immigration usage from other senses. The "hostile environment" case is particularly interesting because the phrase Theresa May coined in 2012 is now used overwhelmingly by Labour and SNP MPs to criticise the policy May created.</p>
+<p>I'll write all this up if and when I get to it.</p>
+<p>Credit where it's due: the Guardian/UCL team's transparency about methodology is what made this engagement possible. Most computational analyses in journalism are black-boxed; theirs isn't. Code and data for everything above are at <a href="https://github.com/tyler-alexander-martin/guardian-analysis">github.com/tyler-alexander-martin/guardian-analysis</a>.</p>
+<footer class="post-footer"><p>Last updated: 27 May 2026. <a href="https://github.com/tyler-alexander-martin/guardian-analysis">GitHub repo</a>.</p><div class="share"><a href="https://twitter.com/intent/tweet?text=Stance%20without%20affect&url=https%3A%2F%2Ftyler-alexander-martin.com%2Fguardian-analysis%2F">Share on X</a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftyler-alexander-martin.com%2Fguardian-analysis%2F">Share on LinkedIn</a><button id="copy-link" type="button">Copy link</button></div></footer>
+</main>
+<script>
+async function drawChart(){
+  const response = await fetch('../data/processed/stop_the_boats_chart_data.json');
+  const payload = await response.json();
+  const years = payload.years;
+  const useTypes = [{key:'own_voice', label:'own-voice use', axis:'y'}, {key:'quoted_or_critical', label:'quoted or critical use', axis:'y2'}];
+  const traces = [];
+  for (const panel of useTypes){
+    for (const party of payload.parties){
+      const counts = years.map(year => {
+        const row = payload.rows.find(r => r.year === year && r.party === party && r.echo_type === panel.key);
+        return row ? row.count : 0;
+      });
+      traces.push({type:'bar', x:years, y:counts, name:payload.party_labels[party], marker:{color:payload.party_colors[party]}, legendgroup:party, showlegend:panel.key==='own_voice', xaxis:'x', yaxis:panel.axis, customdata:counts.map((count, i)=>[payload.party_labels[party], years[i], panel.label, count]), hovertemplate:'%{customdata[0]}<br>Year: %{customdata[1]}<br>Use type: %{customdata[2]}<br>Count: %{customdata[3]}<extra></extra>'});
+    }
+  }
+  const layout = {title:{text:"Hansard mentions of 'stop the boats' by party and use type, 2015-2025.", x:0.02, xanchor:'left'}, barmode:'stack', bargap:0.18, paper_bgcolor:'#ffffff', plot_bgcolor:'#ffffff', margin:{l:55,r:20,t:78,b:50}, legend:{orientation:'h', x:0, y:1.08}, xaxis:{tickmode:'array', tickvals:years, anchor:'y2', title:'Year'}, yaxis:{domain:[0.56,1], title:'Mentions', showgrid:true, gridcolor:'#eee', zeroline:false}, yaxis2:{domain:[0,0.44], title:'Mentions', showgrid:false, zeroline:false}, annotations:[{text:'own-voice use', xref:'paper', yref:'paper', x:0, y:1.02, showarrow:false, font:{size:13}}, {text:'quoted or critical use', xref:'paper', yref:'paper', x:0, y:0.46, showarrow:false, font:{size:13}}, {text:"In 2023, about 1 in 5 mentions of 'stop the boats' was quoted or critical use.", x:2023, y:57, xref:'x', yref:'y2', showarrow:true, ax:-110, ay:-35, bgcolor:'#fff', bordercolor:'#777', borderpad:4, font:{size:12}}]};
+  Plotly.newPlot('stop-boats-chart', traces, layout, {responsive:true, displayModeBar:false});
+}
+drawChart();
+document.getElementById('copy-link').addEventListener('click', async () => {await navigator.clipboard.writeText(location.href); document.getElementById('copy-link').textContent='Copied';});
+</script>
+</body>
+</html>

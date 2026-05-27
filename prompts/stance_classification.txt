@@ -1,0 +1,16 @@
+Classify each UK Parliament speech for immigration/asylum/refugee stance.
+
+Use exactly one stance label:
+- pro_immigration_or_pro_refugee: speaker substantively supports migrants, refugees, asylum seekers, safe routes, rights, protections, family reunion, compensation for hostile-environment harms, or criticises restrictive policy on humanitarian/rights grounds.
+- restrictive_or_hostile: speaker substantively supports control, deterrence, removals, deportation, offshore/third-country processing, inadmissibility, illegal-entry framing, pull-factor arguments, or selective restriction, even if framed in humanitarian or compassionate language.
+- mixed_or_unclear: speech contains competing signals, is mainly procedural/operational, or the substantive stance cannot be determined.
+- not_immigration_stance: immigration/asylum/refugee language is incidental and the speech is not taking a stance on immigration policy or migrants/refugees/asylum seekers.
+
+Important distinctions:
+- Do not treat quoted, criticised, or negated hostile vocabulary as the speaker endorsing that vocabulary.
+- If a minister defends restrictive policy using humanitarian language, classify the substantive policy stance as restrictive_or_hostile.
+- If a speaker says a restrictive policy is cruel, shameful, immoral, unlawful because of harms to migrants/refugees/asylum seekers, classify as pro_immigration_or_pro_refugee.
+- If a speaker only says a policy is inefficient, expensive, or badly drafted, classify as mixed_or_unclear unless there is a clear humanitarian/rights stance.
+
+Return JSON only, as a list of objects with:
+speech_id, stance, surface_tone, confidence, rationale_short.

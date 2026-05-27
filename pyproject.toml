@@ -1,0 +1,21 @@
+[project]
+name = "guardian-analysis"
+version = "0.1.0"
+description = "Scoped exploration of LLM-assisted methods for UK Hansard immigration rhetoric."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.52.0",
+    "beautifulsoup4>=4.12.3",
+    "lxml>=5.2.0",
+    "matplotlib>=3.10.9",
+    "pandas>=2.2.2",
+    "pyarrow>=16.1.0",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+    "tabulate>=0.9.0",
+    "tqdm>=4.66.4",
+]
+
+[tool.ruff]
+line-length = 100

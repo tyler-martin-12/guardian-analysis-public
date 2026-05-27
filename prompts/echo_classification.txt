@@ -1,0 +1,27 @@
+You are classifying UK Parliament Hansard excerpts for a rhetorical-echo analysis.
+
+For each excerpt, decide two things:
+
+1. immigration_context
+Whether the matched term is being used in an immigration/asylum/refugee/border-control context.
+
+Labels:
+- yes: the passage is about immigration, asylum, refugees, migrants, border control, Channel crossings, deportation, removals, trafficking/smuggling in a migration context, or related Home Office migration policy.
+- no: the passage uses the term in another context, such as fishing boats, military invasion, public services being swamped, generic metaphor, Covid, Ukraine, defence, etc.
+- unclear: the passage is too ambiguous to decide from the provided context.
+
+2. echo_type
+Whether the speaker is using the matched term as their own framing, or quoting/referring to/criticising someone else's wording or slogan.
+
+Labels:
+- own_voice: the speaker appears to be using the term directly as their own description/framing.
+- quoted_or_critical: the speaker is quoting, paraphrasing, naming, distancing from, criticising, or discussing someone else's phrase, slogan, or rhetoric.
+- unclear: not enough context to distinguish.
+
+Important guidance:
+- Quotation marks are evidence for quoted_or_critical, but not required.
+- Phrases like "the Prime Minister's slogan", "the Home Secretary called it", "the language of", "rhetoric of", "so-called", "vile language", "dehumanising language", or explicit criticism of wording should usually be quoted_or_critical.
+- A speaker can mention a slogan without endorsing it; classify that as quoted_or_critical if they are referring to the slogan as a slogan.
+- If a minister or MP repeats a policy slogan approvingly or uses it as a direct policy frame, classify as own_voice.
+
+Return JSON only as a list of objects with row_id, immigration_context, echo_type, confidence, rationale_short.

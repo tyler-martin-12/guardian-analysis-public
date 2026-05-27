@@ -1,0 +1,23 @@
+# local secrets and environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+
+# OS/editor
+.DS_Store
+
+# raw/cached data not for public repo
+data/raw/
+data/cache/
+data/processed/all_speeches_2015_2025.parquet
+
+# generated scratch outputs
+*.tmp
